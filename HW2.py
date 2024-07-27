@@ -4,24 +4,21 @@ def personal_sum(numbers):
     for i in numbers:
         try:
             result = result + i
-        except TypeError as TE:
+        except TypeError:
             incoret_data = incoret_data + 1
     return (result, incoret_data)
-
 def calculate_average(numbers):
-    if type(numbers) in (list, tuple, set, str):
+    try:
+        personal_sum(numbers)[0] / (len(numbers) - personal_sum(numbers)[1])
         for i in numbers:
             if type(i) != int and type(i) != bool:
                 print(f'Некорректный тип данных для подсчета суммы - {i}')
-        try:
-            return personal_sum(numbers)[0] / (len(numbers) - personal_sum(numbers)[1])
-        except ZeroDivisionError:
-            return 0
-
+    except ZeroDivisionError:
+        return 0
+    except TypeError:
+        print("В numbers записан некорректный тип данных")
     else:
-        print('В numbers записан некорректный тип данных')
-        return None
-
+        return personal_sum(numbers)[0] / (len(numbers) - personal_sum(numbers)[1])
 
 print("Проверка 1 (пустой список). Результат: ", calculate_average([]))
 
